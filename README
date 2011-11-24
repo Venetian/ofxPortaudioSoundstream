@@ -1,1 +1,77 @@
-ofxPortaudioSoundstream
+This project is an add-on class version of ofSoundStream that employs PortAudio, based on the ofxSoundstream add-on that uses RtAudio
+Advantage is that RtAudio changes samplerate on launch which can be annoying
+
+The idea here is that you can have two ofSoundStreams:
+input, say from, line-in
+and play this through an output - eg headphones
+so you can analyse an input source and write what you need to the output.
+
+1. addons - uses a new add-on created by andrew Robertson, called ofxPortaudioSoundStream
+It wraps a portaudio soundstream into a class so you can have multiple instances. It also needs ofxAudioEvent which is in ofxSoundstream, so please download that add-on separately
+
+2.
+Then you need the PortAudio compiled library. I put some instructions/comments in openframeworks forum on how I got PortAudio running on OF. In my file system, I added portaudio fouler to 
+openframeworks007->libs
+
+(this is included in the addToLibs folder, does that work?)
+
+3.
+
+you also need to add
+audioUnit.frameworks
+
+this should be done by adding existing frameworks, under action in x-code
+
+4. The Xcode compiled library needs to be changed
+../../../libs/openFrameworksCompiled/project/osx/CoreOF.xcconfig
+
+In my XcodeConfig file I added two lines:
+In header section:
+HEADER_PORTAUDIO = "$(OF_PATH)/libs/portaudio/include"
+And in Lib section:
+LIB_PORTAUDIO = "$(OF_PATH)/libs/portaudio/lib/osx/libportaudio.a"
+HEADER_PORTAUDIO = "$(OF_PATH)/libs/portaudio/include"//added include here
+
+i.e. it looks like
+LIB_POCOUTIL = "$(OF_PATH)/libs/poco/lib/osx/PocoUtil.a"
+LIB_POCOXML = "$(OF_PATH)/libs/poco/lib/osx/PocoXML.a"
+LIB_PORTAUDIO = "$(OF_PATH)/libs/portaudio/lib/osx/libportaudio.a"
+
+5. I think you may have to recompile openFrameworks to successfully to (4.)
+
+if so, I think(?) that you:
+go to OF_7->libs->openFrameworksCompiled->Project->osx->openFrameworks.xcodeproj
+open that. Change the Xcode.cponfig file as in (4.)
+now compile
+
+so I think it now can access portaudio. I think you would need to add portaudio, perhaps as in parts 2 and 3 aboveÉ.?
+
+
+
+Please let me know if you either 
+1. got this running
+2. need some help
+3. did something cool with it - that would be great to hear about either way!
+
+Could I also ask that if this project is used in any way (event, installation etc), you please contact me andrew.robertson@eecs.qmul.ac.uk with information on this. It's very useful as we are publicly funded and need to give an impact statement on how our research work is used.
+
+http://www.elec.qmul.ac.uk/digitalmusic/index.html
+
+www.eecs.qmul.ac.uk/~andrewr
+
+
+andrewrobertson77@googlemail.com
+
+
+FILES:
+
+portaudio - this ia a compiled library of portaudio for mac os x. Put this into the "openframeworks->libs" folder
+data : contains a font used 
+
+DEPENDENCIES:
+
+ofxPortaudioSoundStream 
+
+ofxSoundStream - it uses the ofxAudioevent from this so find the add-on ofxSoundStream for that
+
+
